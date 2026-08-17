@@ -16,14 +16,16 @@ import ucu.edu.aed.tda.TDALista;
  *
  * @param <T> el tipo de los elementos almacenados en la lista
  */
-public interface Lista<T> extends TDALista<T> {
+public class ListaEnlazada<T> implements TDALista<T> {
 
     /**
      * Agrega un elemento al final de la lista.
      *
      * @param elem el elemento a agregar
      */
-    void agregar(T elem);
+    public void agregar(T elem){
+    
+    }
 
     /**
      * Agrega un elemento en la posición indicada.
@@ -35,7 +37,9 @@ public interface Lista<T> extends TDALista<T> {
      * @param elem el elemento a agregar
      * @throws IndexOutOfBoundsException si el índice está fuera de rango
      */
-    void agregar(int index, T elem);
+    public void agregar(int index, T elem){
+        
+    }
 
     /**
      * Obtiene el elemento almacenado en la posición indicada.
@@ -44,7 +48,9 @@ public interface Lista<T> extends TDALista<T> {
      * @return el elemento ubicado en la posición indicada
      * @throws IndexOutOfBoundsException si el índice está fuera de rango
      */
-    T obtener(int index);
+    public T obtener(int index){
+        return null;
+    }
 
     /**
      * Remueve y devuelve el elemento almacenado en la posición indicada.
@@ -56,7 +62,9 @@ public interface Lista<T> extends TDALista<T> {
      * @return el elemento removido
      * @throws IndexOutOfBoundsException si el índice está fuera de rango
      */
-    T remover(int index);
+    public T remover(int index){
+        return null;
+    }
 
     /**
      * Remueve la primera ocurrencia del elemento indicado en la lista.
@@ -68,7 +76,9 @@ public interface Lista<T> extends TDALista<T> {
      * @return {@code true} si el elemento fue encontrado y removido;
      *         {@code false} en caso contrario
      */
-    boolean remover(T elem);
+    public boolean remover(T elem){
+        return true;
+    }
 
     /**
      * Determina si la lista contiene el elemento indicado.
@@ -80,7 +90,9 @@ public interface Lista<T> extends TDALista<T> {
      * @return {@code true} si el elemento está presente en la lista;
      *         {@code false} en caso contrario
      */
-    boolean contiene(T elem);
+    public boolean contiene(T elem){
+        return true;
+    }
 
     /**
      * Retorna el índice de la primera ocurrencia del elemento indicado.
@@ -92,7 +104,9 @@ public interface Lista<T> extends TDALista<T> {
      * @return el índice de la primera ocurrencia del elemento, o {@code -1}
      *         si el elemento no se encuentra en la lista
      */
-    int indiceDe(T elem);
+    public int indiceDe(T elem){
+        return 0;
+    }
 
     /**
      * Busca y retorna el primer elemento que cumple con el criterio dado.
@@ -101,7 +115,9 @@ public interface Lista<T> extends TDALista<T> {
      * @return el primer elemento que cumple el criterio, o {@code null}
      *         si no existe ninguno
      */
-    T buscar(Predicate<T> criterio);
+    public T buscar(Predicate<T> criterio){
+        return null;
+    }
 
     /**
      * Retorna una nueva lista con los elementos ordenados según el comparador dado.
@@ -112,14 +128,18 @@ public interface Lista<T> extends TDALista<T> {
      * @param comparator el comparador que define el orden de los elementos
      * @return una lista ordenada según el criterio indicado
      */
-    TDALista<T> ordenar(Comparator<T> comparator);
+    public TDALista<T> ordenar(Comparator<T> comparator){
+        return null;
+    }
 
     /**
      * Retorna la cantidad de elementos almacenados en la lista.
      *
      * @return la cantidad de elementos de la lista
      */
-    int tamaño();
+    public int tamaño(){
+        return 0;
+    }
 
     /**
      * Determina si la lista no contiene elementos.
@@ -127,12 +147,16 @@ public interface Lista<T> extends TDALista<T> {
      * @return {@code true} si la lista está vacía;
      *         {@code false} en caso contrario
      */
-    boolean esVacio();
+    public boolean esVacio(){
+         return true;
+    }
 
     /**
      * Elimina todos los elementos de la lista.
      *
      * <p>Luego de invocar este método, la lista queda vacía.</p>
      */
-    void vaciar();
+    public void vaciar(){
+        
+    }
 }

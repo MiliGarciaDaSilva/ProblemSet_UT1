@@ -16,7 +16,7 @@ import ucu.edu.aed.tda.TDACola;
  *
  * @param <T> el tipo de los elementos almacenados en la cola
  */
-public interface Cola<T> extends TDACola<T> {
+public class Cola<T> extends ListaEnlazada<T> implements TDACola<T> {
 
     /**
      * Retorna el elemento ubicado al frente de la cola, sin removerlo.
@@ -24,7 +24,9 @@ public interface Cola<T> extends TDACola<T> {
      * @return el elemento ubicado al frente de la cola
      * @throws java.util.NoSuchElementException si la cola está vacía
      */
-    T frente();
+    public T frente(){
+        return null;
+    };
 
     /**
      * Inserta un elemento al final de la cola.
@@ -33,7 +35,9 @@ public interface Cola<T> extends TDACola<T> {
      * @return {@code true} si el elemento fue agregado correctamente;
      *         {@code false} en caso contrario
      */
-    boolean poneEnCola(T dato);
+    public boolean poneEnCola(T dato){
+        return true;
+    }
 
     /**
      * Remueve y retorna el elemento ubicado al frente de la cola.
@@ -44,5 +48,7 @@ public interface Cola<T> extends TDACola<T> {
      * @return el elemento removido del frente de la cola
      * @throws java.util.NoSuchElementException si la cola está vacía
      */
-    T quitaDeCola();
+    public T quitaDeCola(){
+        return null;
+    }
 }

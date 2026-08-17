@@ -14,7 +14,7 @@ import ucu.edu.aed.tda.TDAPila;
  *
  * @param <T> el tipo de los elementos almacenados en la pila
  */
-public interface Pila<T> extends TDAPila<T> {
+public class Pila<T> extends ListaEnlazada<T> implements TDAPila<T> {
 
     /**
      * Retorna el elemento ubicado en el tope de la pila, sin removerlo.
@@ -22,7 +22,9 @@ public interface Pila<T> extends TDAPila<T> {
      * @return el elemento ubicado en el tope de la pila
      * @throws java.util.NoSuchElementException si la pila está vacía
      */
-    T tope();
+    public T tope(){
+        return null;
+    }
 
     /**
      * Remueve y retorna el elemento ubicado en el tope de la pila.
@@ -33,12 +35,16 @@ public interface Pila<T> extends TDAPila<T> {
      * @return el elemento removido del tope de la pila
      * @throws java.util.NoSuchElementException si la pila está vacía
      */
-    T saca();
+    public T saca(){
+        return null;
+    }
 
     /**
      * Inserta un elemento en el tope de la pila.
      *
      * @param dato el elemento a insertar
      */
-    void mete(T dato);
+    public void mete(T dato){
+    
+    }
 }

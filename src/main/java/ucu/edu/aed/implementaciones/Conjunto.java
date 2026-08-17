@@ -14,7 +14,7 @@ import ucu.edu.aed.tda.TDAConjunto;
  *
  * @param <T> el tipo de los elementos almacenados en el conjunto
  */
-public interface Conjunto<T> extends TDAConjunto<T> {
+public class Conjunto<T> extends ListaEnlazada<T> implements TDAConjunto<T> {
     /**
      * Retorna un nuevo conjunto que representa la unión entre este conjunto
      * y el conjunto recibido como parámetro.
@@ -22,7 +22,9 @@ public interface Conjunto<T> extends TDAConjunto<T> {
      * @param otro el otro conjunto
      * @return un nuevo conjunto con todos los elementos de ambos conjuntos
      */
-    TDAConjunto<T> union(TDAConjunto<T> otro);
+    public TDAConjunto<T> union(TDAConjunto<T> otro){
+        return null;
+    }
 
     /**
      * Retorna un nuevo conjunto que representa la intersección entre este conjunto
@@ -31,7 +33,9 @@ public interface Conjunto<T> extends TDAConjunto<T> {
      * @param otro el otro conjunto
      * @return un nuevo conjunto con los elementos comunes a ambos conjuntos
      */
-    TDAConjunto<T> interseccion(TDAConjunto<T> otro);
+    public TDAConjunto<T> interseccion(TDAConjunto<T> otro){
+         return null;
+    }
 
     /**
      * Retorna un nuevo conjunto que representa la diferencia entre este conjunto
@@ -43,7 +47,9 @@ public interface Conjunto<T> extends TDAConjunto<T> {
      * @param otro el otro conjunto
      * @return un nuevo conjunto con la diferencia entre ambos conjuntos
      */
-    TDAConjunto<T> diferencia(TDAConjunto<T> otro);
+    public TDAConjunto<T> diferencia(TDAConjunto<T> otro){
+        return null;
+    }
 
     /**
      * Determina si este conjunto es subconjunto del conjunto dado.
@@ -52,5 +58,7 @@ public interface Conjunto<T> extends TDAConjunto<T> {
      * @return {@code true} si todos los elementos de este conjunto pertenecen también a {@code otro};
      * {@code false} en caso contrario
      */
-    boolean esSubconjuntoDe(TDAConjunto<T> otro);
+    public boolean esSubconjuntoDe(TDAConjunto<T> otro){
+         return true;
+    }
 }
