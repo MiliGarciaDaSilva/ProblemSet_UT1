@@ -1,7 +1,8 @@
 package ucu.edu.aed.implementaciones;
+import java.util.NoSuchElementException;
+
 import ucu.edu.aed.tda.TDALista;
 import ucu.edu.aed.tda.TDAPila;
-import java.util.NoSuchElementException;
 /**
  * Define un Tipo de Dato Abstracto (TDA) Pila genérica.
  *
@@ -23,6 +24,8 @@ public class Pila<T> extends ListaEnlazada<T> implements TDAPila<T> {
      * @return el elemento ubicado en el tope de la pila
      * @throws java.util.NoSuchElementException si la pila está vacía
      */
+
+    @Override
     public T tope(){
         if (cabeza == null){
             throw new NoSuchElementException();
@@ -39,6 +42,7 @@ public class Pila<T> extends ListaEnlazada<T> implements TDAPila<T> {
      * @return el elemento removido del tope de la pila
      * @throws java.util.NoSuchElementException si la pila está vacía
      */
+    @Override
     public T saca(){
         if (cabeza == null){
             throw new NoSuchElementException();
@@ -56,6 +60,8 @@ public class Pila<T> extends ListaEnlazada<T> implements TDAPila<T> {
      *
      * @param dato el elemento a insertar
      */
+
+    @Override
     public void mete(T dato){
         Nodo<T> nuevoNodo = new Nodo<>(dato);
         nuevoNodo.siguiente = cabeza;

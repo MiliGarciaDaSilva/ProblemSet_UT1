@@ -26,6 +26,8 @@ public class Cola<T> extends ListaEnlazada<T> implements TDACola<T> {
      * @return el elemento ubicado al frente de la cola
      * @throws java.util.NoSuchElementException si la cola está vacía
      */
+
+    @Override
     public T frente(){
         if (esVacio()) {
             throw new NoSuchElementException();
@@ -41,6 +43,8 @@ public class Cola<T> extends ListaEnlazada<T> implements TDACola<T> {
      * @return {@code true} si el elemento fue agregado correctamente;
      *         {@code false} en caso contrario
      */
+
+    @Override
     public boolean poneEnCola(T dato){
         agregar(dato);
         return true;
@@ -55,6 +59,8 @@ public class Cola<T> extends ListaEnlazada<T> implements TDACola<T> {
      * @return el elemento removido del frente de la cola
      * @throws java.util.NoSuchElementException si la cola está vacía
      */
+
+    @Override
     public T quitaDeCola(){
         if (esVacio()) {
             throw new NoSuchElementException();

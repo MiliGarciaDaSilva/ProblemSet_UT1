@@ -28,6 +28,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
      *
      * @param elem el elemento a agregar
      */
+    @Override
     public void agregar(T elem){
         Nodo<T> nuevoNodo = new Nodo<>(elem);
         if (cabeza == null){
@@ -52,6 +53,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @throws IndexOutOfBoundsException si el índice está fuera de rango
      */
 
+    @Override
     public void agregar(int index, T elem){
         if (index < 0 || index > tamanio){
             throw new IndexOutOfBoundsException();
@@ -88,6 +90,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @throws IndexOutOfBoundsException si el índice está fuera de rango
      */
 
+    @Override
     public T obtener(int index){
         if (index < 0 || index >= tamanio){
             throw new IndexOutOfBoundsException();
@@ -116,6 +119,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @throws IndexOutOfBoundsException si el índice está fuera de rango
      */
 
+    @Override
     public T remover(int index){
         if (index < 0 || index >= tamanio){
             throw new IndexOutOfBoundsException();
@@ -160,6 +164,8 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @return {@code true} si el elemento fue encontrado y removido;
      *         {@code false} en caso contrario
      */
+
+    @Override
     public boolean remover(T elem){
         if (cabeza == null){
             return false;
@@ -201,6 +207,8 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @return {@code true} si el elemento está presente en la lista;
      *         {@code false} en caso contrario
      */
+
+    @Override
     public boolean contiene(T elem){
         Nodo<T> actual = cabeza;
         while (actual != null){
@@ -223,6 +231,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
      *         si el elemento no se encuentra en la lista
      */
 
+    @Override
     public int indiceDe(T elem){
         Nodo<T> actual = cabeza;
         int contador = 0;
@@ -244,6 +253,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
      *         si no existe ninguno
      */
 
+    @Override
     public T buscar(Predicate<T> criterio){
         Nodo<T> actual = cabeza;
         while (actual != null){
@@ -265,8 +275,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @return una lista ordenada según el criterio indicado
      */
 
-
-
+    @Override
     public TDALista<T> ordenar(Comparator<T> comparator){
         ListaEnlazada<T> resultado = new ListaEnlazada<>();
         Nodo<T> actual = cabeza;
@@ -309,7 +318,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @return la cantidad de elementos de la lista
      */
 
-
+    @Override
     public int tamaño(){
         return tamanio;
     }
@@ -320,13 +329,10 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @return {@code true} si la lista está vacía;
      *         {@code false} en caso contrario
      */
+
+    @Override
     public boolean esVacio(){
-        if (cabeza == null){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return cabeza == null;
     }
 
     /**
@@ -334,9 +340,12 @@ public class ListaEnlazada<T> implements TDALista<T> {
      *
      * <p>Luego de invocar este método, la lista queda vacía.</p>
      */
+
+    @Override
     public void vaciar(){
         cabeza = null;
         cola = null;
         tamanio = 0;
     }
+
 }
