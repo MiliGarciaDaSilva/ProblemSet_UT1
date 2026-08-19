@@ -18,7 +18,8 @@ import ucu.edu.aed.tda.TDALista;
  */
 public class ListaEnlazada<T> implements TDALista<T> {
 
-    private Nodo<T> cabeza;
+    protected Nodo<T> cabeza;
+    protected int tamanio;
 
     /**
      * Agrega un elemento al final de la lista.
@@ -36,6 +37,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
             }
             actual.siguiente = new Nodo<>(elem);
         }
+        tamanio++;
         }
 
     /**
@@ -76,9 +78,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
                 actual.siguiente = nuevoNodo;
             }
         }
-        
-        
-        
+        tamanio++;
     }
 
     /**
@@ -125,6 +125,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
             }
             cabeza = cabeza.siguiente;
             nodoRemovido.siguiente = null;
+            tamanio--;
             return nodoRemovido.getDato();
         }
         Nodo<T> actual = cabeza;
@@ -139,6 +140,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
         Nodo<T> nodoASacar = actual.siguiente;
         actual.siguiente = actual.siguiente.siguiente;
         nodoASacar.siguiente = null;
+        tamanio--;
         return nodoASacar.getDato();
     }
 
@@ -164,6 +166,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
             Nodo<T> nodoRemovido = cabeza;
             cabeza = cabeza.siguiente;
             nodoRemovido.siguiente = null;
+            tamanio--;
             return true;
         }
         Nodo<T> actual = cabeza;
@@ -172,6 +175,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
                 Nodo<T> nodoRemovido = actual.siguiente;
                 actual.siguiente = actual.siguiente.siguiente;
                 nodoRemovido.siguiente = null;
+                tamanio--;
                 return true;
             }
             actual = actual.siguiente;
@@ -280,6 +284,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
             actual = actual.siguiente;
         }
 
+        resultado.tamanio = this.tamanio;
         return resultado;
     }
 
@@ -292,13 +297,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
 
     //Podemos agregarle un atributo tamaño que se incremente al agregar elementos y disminuya al removerlos para que tenga O(1).
     public int tamaño(){
-        int contador = 0;
-        Nodo<T> actual = cabeza;
-        while (actual != null){
-            contador++;
-            actual = actual.siguiente;
-        }
-        return contador;
+        return tamanio;
     }
 
     /**
@@ -323,5 +322,6 @@ public class ListaEnlazada<T> implements TDALista<T> {
      */
     public void vaciar(){
         cabeza = null;
+        tamanio = 0;
     }
 }
