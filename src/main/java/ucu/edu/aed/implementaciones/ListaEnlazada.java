@@ -109,6 +109,10 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * <p>Los elementos posteriores, si existen, desplazan su índice
      * una posición hacia la izquierda.</p>
      *
+     * <p>Comportamiento "Quitar": el nodo se desconecta de la lista y
+     * su campo siguiente se deja en null para evitar referencias
+     * residuales hacia el resto de la lista.</p>
+     *
      * @param index la posición del elemento a remover
      * @return el elemento removido
      * @throws IndexOutOfBoundsException si el índice está fuera de rango
@@ -119,6 +123,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
         if (index == 0){
             Nodo<T> nodoRemovido = cabeza;
             cabeza = cabeza.siguiente;
+            nodoRemovido.siguiente = null;
             return nodoRemovido.getDato();
         }
         while (actual.siguiente != null && contador != index){
@@ -131,6 +136,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
         else{
             Nodo<T> nodoASacar = actual.siguiente;
             actual.siguiente = actual.siguiente.siguiente;
+            nodoASacar.siguiente = null;
             return nodoASacar.getDato();
         }
     }
@@ -141,6 +147,10 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * <p>La comparación del elemento queda sujeta al criterio definido
      * por la implementación, normalmente mediante {@code equals}.</p>
      *
+     * <p>Comportamiento "Eliminar": el nodo se desconecta de la lista y
+     * su campo siguiente se deja en null para evitar referencias
+     * residuales hacia el resto de la lista.</p>
+     *
      * @param elem el elemento a remover
      * @return {@code true} si el elemento fue encontrado y removido;
      *         {@code false} en caso contrario
@@ -150,13 +160,17 @@ public class ListaEnlazada<T> implements TDALista<T> {
             return false;
         }
         if (cabeza.getDato().equals(elem)){
+            Nodo<T> nodoRemovido = cabeza;
             cabeza = cabeza.siguiente;
+            nodoRemovido.siguiente = null;
             return true;
         }
         Nodo<T> actual = cabeza;
         while (actual.siguiente != null){
             if (actual.siguiente.getDato().equals(elem)){
+                Nodo<T> nodoRemovido = actual.siguiente;
                 actual.siguiente = actual.siguiente.siguiente;
+                nodoRemovido.siguiente = null;
                 return true;
             }
             actual = actual.siguiente;
