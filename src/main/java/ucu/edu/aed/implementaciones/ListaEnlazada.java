@@ -16,9 +16,11 @@ import ucu.edu.aed.tda.TDALista;
  *
  * @param <T> el tipo de los elementos almacenados en la lista
  */
+
 public class ListaEnlazada<T> implements TDALista<T> {
 
     protected Nodo<T> cabeza;
+    protected Nodo<T> cola;
     protected int tamanio;
 
     /**
@@ -27,18 +29,17 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @param elem el elemento a agregar
      */
     public void agregar(T elem){
+        Nodo<T> nuevoNodo = new Nodo<>(elem);
         if (cabeza == null){
-            cabeza = new Nodo<>(elem);
+            cabeza = nuevoNodo;
+            cola = nuevoNodo;
         }
         else{
-            Nodo<T> actual = cabeza;
-            while (actual.siguiente != null){
-                actual = actual.siguiente;
-            }
-            actual.siguiente = new Nodo<>(elem);
+            cola.siguiente = nuevoNodo;
+            cola = nuevoNodo;
         }
         tamanio++;
-        }
+    }
 
     /**
      * Agrega un elemento en la posición indicada.
@@ -51,31 +52,29 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @throws IndexOutOfBoundsException si el índice está fuera de rango
      */
 
-
-    //Si tenemos un puntero a la cola, agregar es de o(1), sino es de O(N).
     public void agregar(int index, T elem){
-        if (cabeza == null){
-            cabeza = new Nodo<>(elem);
+        if (index < 0 || index > tamanio){
+            throw new IndexOutOfBoundsException();
+        }
+        Nodo<T> nuevoNodo = new Nodo<>(elem);
+        if (index == 0){
+            nuevoNodo.siguiente = cabeza;
+            cabeza = nuevoNodo;
+            if (tamanio == 0){
+                cola = nuevoNodo;
+            }
         }
         else{
-            if (index == 0){
-                Nodo<T> nuevoNodo = new Nodo<>(elem);
-                nuevoNodo.siguiente = cabeza;
-                cabeza = nuevoNodo;
+            int contador = 0;
+            Nodo<T> actual = cabeza;
+            while (contador < index - 1){
+                actual = actual.siguiente;
+                contador++;
             }
-            else {
-                int contador = 0;
-                Nodo<T> actual = cabeza;
-                while (contador < index - 1 && actual.siguiente != null){
-                    actual = actual.siguiente;
-                    contador++;
-                }
-                if (contador != index - 1){
-                    throw new IndexOutOfBoundsException();
-                }
-                Nodo<T> nuevoNodo = new Nodo<>(elem);
-                nuevoNodo.siguiente = actual.siguiente;
-                actual.siguiente = nuevoNodo;
+            nuevoNodo.siguiente = actual.siguiente;
+            actual.siguiente = nuevoNodo;
+            if (nuevoNodo.siguiente == null){
+                cola = nuevoNodo;
             }
         }
         tamanio++;
@@ -88,19 +87,18 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @return el elemento ubicado en la posición indicada
      * @throws IndexOutOfBoundsException si el índice está fuera de rango
      */
+
     public T obtener(int index){
+        if (index < 0 || index >= tamanio){
+            throw new IndexOutOfBoundsException();
+        }
         Nodo<T> actual = cabeza;
         int contador = 0;
-        while (actual != null && contador != index){
+        while (contador != index){
             actual = actual.siguiente;
             contador++;
         }
-        if (contador != index){
-            throw new IndexOutOfBoundsException();
-        }
-        else{
-            return actual.getDato();
-        }
+        return actual.getDato();
     }
 
     /**
@@ -117,29 +115,33 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @return el elemento removido
      * @throws IndexOutOfBoundsException si el índice está fuera de rango
      */
+
     public T remover(int index){
+        if (index < 0 || index >= tamanio){
+            throw new IndexOutOfBoundsException();
+        }
         if (index == 0){
             Nodo<T> nodoRemovido = cabeza;
-            if (nodoRemovido == null){
-                throw new IndexOutOfBoundsException();
-            }
             cabeza = cabeza.siguiente;
             nodoRemovido.siguiente = null;
+            if (cabeza == null){
+                cola = null;
+            }
             tamanio--;
             return nodoRemovido.getDato();
         }
         Nodo<T> actual = cabeza;
         int contador = 0;
-        while (actual != null && contador < index - 1){
+        while (contador < index - 1){
             actual = actual.siguiente;
             contador++;
-        }
-        if (actual == null || actual.siguiente == null){
-            throw new IndexOutOfBoundsException();
         }
         Nodo<T> nodoASacar = actual.siguiente;
         actual.siguiente = actual.siguiente.siguiente;
         nodoASacar.siguiente = null;
+        if (actual.siguiente == null){
+            cola = actual;
+        }
         tamanio--;
         return nodoASacar.getDato();
     }
@@ -166,6 +168,9 @@ public class ListaEnlazada<T> implements TDALista<T> {
             Nodo<T> nodoRemovido = cabeza;
             cabeza = cabeza.siguiente;
             nodoRemovido.siguiente = null;
+            if (cabeza == null){
+                cola = null;
+            }
             tamanio--;
             return true;
         }
@@ -175,6 +180,9 @@ public class ListaEnlazada<T> implements TDALista<T> {
                 Nodo<T> nodoRemovido = actual.siguiente;
                 actual.siguiente = actual.siguiente.siguiente;
                 nodoRemovido.siguiente = null;
+                if (actual.siguiente == null){
+                    cola = actual;
+                }
                 tamanio--;
                 return true;
             }
@@ -214,6 +222,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @return el índice de la primera ocurrencia del elemento, o {@code -1}
      *         si el elemento no se encuentra en la lista
      */
+
     public int indiceDe(T elem){
         Nodo<T> actual = cabeza;
         int contador = 0;
@@ -234,6 +243,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @return el primer elemento que cumple el criterio, o {@code null}
      *         si no existe ninguno
      */
+
     public T buscar(Predicate<T> criterio){
         Nodo<T> actual = cabeza;
         while (actual != null){
@@ -257,7 +267,6 @@ public class ListaEnlazada<T> implements TDALista<T> {
 
 
 
-    //Con un merge sort sería de O(N log N) y no de O(NxN).
     public TDALista<T> ordenar(Comparator<T> comparator){
         ListaEnlazada<T> resultado = new ListaEnlazada<>();
         Nodo<T> actual = cabeza;
@@ -269,6 +278,9 @@ public class ListaEnlazada<T> implements TDALista<T> {
                 Nodo<T> nuevoNodo = new Nodo<>(dato);
                 nuevoNodo.siguiente = resultado.cabeza;
                 resultado.cabeza = nuevoNodo;
+                if (resultado.cola == null){
+                    resultado.cola = nuevoNodo;
+                }
             }
             else{
                 Nodo<T> actualResultado = resultado.cabeza;
@@ -279,6 +291,9 @@ public class ListaEnlazada<T> implements TDALista<T> {
                 Nodo<T> nuevoNodo = new Nodo<>(dato);
                 nuevoNodo.siguiente = actualResultado.siguiente;
                 actualResultado.siguiente = nuevoNodo;
+                if (nuevoNodo.siguiente == null){
+                    resultado.cola = nuevoNodo;
+                }
             }
 
             actual = actual.siguiente;
@@ -295,7 +310,6 @@ public class ListaEnlazada<T> implements TDALista<T> {
      */
 
 
-    //Podemos agregarle un atributo tamaño que se incremente al agregar elementos y disminuya al removerlos para que tenga O(1).
     public int tamaño(){
         return tamanio;
     }
@@ -322,6 +336,7 @@ public class ListaEnlazada<T> implements TDALista<T> {
      */
     public void vaciar(){
         cabeza = null;
+        cola = null;
         tamanio = 0;
     }
 }
