@@ -16,7 +16,7 @@ import ucu.edu.aed.tda.TDALista;
  *
  * @param <T> el tipo de los elementos almacenados en la lista
  */
-public class ListaEnlazada<T> implements TDALista<T> {
+public class Conjunto<T> implements TDALista<T> {
 
     protected Nodo<T> cabeza;
     protected int tamanio;
