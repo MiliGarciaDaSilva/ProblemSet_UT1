@@ -48,6 +48,9 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @param elem el elemento a agregar
      * @throws IndexOutOfBoundsException si el índice está fuera de rango
      */
+
+
+    //Si tenemos un puntero a la cola, agregar es de o(1), sino es de O(N).
     public void agregar(int index, T elem){
         if (cabeza == null){
             cabeza = new Nodo<>(elem);
@@ -195,16 +198,14 @@ public class ListaEnlazada<T> implements TDALista<T> {
     public int indiceDe(T elem){
         Nodo<T> actual = cabeza;
         int contador = 0;
-        while (actual != null && actual.getDato().equals(elem)){
+        while (actual != null){
+            if (actual.getDato().equals(elem)){
+                return contador;
+            }
             contador++;
             actual = actual.siguiente;
         }
-        if (actual.getDato().equals(elem)){
-            return contador;
-        }
-        else{
-            return -1;
-        }
+        return -1;
     }
 
     /**
@@ -215,6 +216,13 @@ public class ListaEnlazada<T> implements TDALista<T> {
      *         si no existe ninguno
      */
     public T buscar(Predicate<T> criterio){
+        Nodo<T> actual = cabeza;
+        while (actual != null){
+            if (criterio.test(actual.getDato())){
+                return actual.getDato();
+            }
+            actual = actual.siguiente;
+        }
         return null;
     }
 
@@ -227,8 +235,37 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @param comparator el comparador que define el orden de los elementos
      * @return una lista ordenada según el criterio indicado
      */
+
+
+
+    //Con un merge sort sería de O(N log N) y no de O(NxN).
     public TDALista<T> ordenar(Comparator<T> comparator){
-        return null;
+        ListaEnlazada<T> resultado = new ListaEnlazada<>();
+        Nodo<T> actual = cabeza;
+
+        while (actual != null){
+            T dato = actual.getDato();
+
+            if (resultado.cabeza == null || comparator.compare(dato, resultado.cabeza.getDato()) < 0){
+                Nodo<T> nuevoNodo = new Nodo<>(dato);
+                nuevoNodo.siguiente = resultado.cabeza;
+                resultado.cabeza = nuevoNodo;
+            }
+            else{
+                Nodo<T> actualResultado = resultado.cabeza;
+                while (actualResultado.siguiente != null &&
+                    comparator.compare(dato, actualResultado.siguiente.getDato()) >= 0){
+                    actualResultado = actualResultado.siguiente;
+                }
+                Nodo<T> nuevoNodo = new Nodo<>(dato);
+                nuevoNodo.siguiente = actualResultado.siguiente;
+                actualResultado.siguiente = nuevoNodo;
+            }
+
+            actual = actual.siguiente;
+        }
+
+        return resultado;
     }
 
     /**
@@ -236,6 +273,9 @@ public class ListaEnlazada<T> implements TDALista<T> {
      *
      * @return la cantidad de elementos de la lista
      */
+
+
+    //Podemos agregarle un atributo tamaño que se incremente al agregar elementos y disminuya al removerlos para que tenga O(1).
     public int tamaño(){
         int contador = 0;
         Nodo<T> actual = cabeza;
