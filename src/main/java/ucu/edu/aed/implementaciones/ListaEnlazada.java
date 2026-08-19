@@ -118,27 +118,28 @@ public class ListaEnlazada<T> implements TDALista<T> {
      * @throws IndexOutOfBoundsException si el índice está fuera de rango
      */
     public T remover(int index){
-        Nodo<T> actual = cabeza;
-        int contador = 0;
         if (index == 0){
             Nodo<T> nodoRemovido = cabeza;
+            if (nodoRemovido == null){
+                throw new IndexOutOfBoundsException();
+            }
             cabeza = cabeza.siguiente;
             nodoRemovido.siguiente = null;
             return nodoRemovido.getDato();
         }
-        while (actual.siguiente != null && contador != index){
+        Nodo<T> actual = cabeza;
+        int contador = 0;
+        while (actual != null && contador < index - 1){
             actual = actual.siguiente;
             contador++;
         }
-        if (contador != index){
+        if (actual == null || actual.siguiente == null){
             throw new IndexOutOfBoundsException();
         }
-        else{
-            Nodo<T> nodoASacar = actual.siguiente;
-            actual.siguiente = actual.siguiente.siguiente;
-            nodoASacar.siguiente = null;
-            return nodoASacar.getDato();
-        }
+        Nodo<T> nodoASacar = actual.siguiente;
+        actual.siguiente = actual.siguiente.siguiente;
+        nodoASacar.siguiente = null;
+        return nodoASacar.getDato();
     }
 
     /**
