@@ -1,5 +1,7 @@
 package ucu.edu.aed.tda;
 
+import java.util.LinkedList;
+
 /**
  * Define un Tipo de Dato Abstracto (TDA) Conjunto genérico.
  *

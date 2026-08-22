@@ -27,6 +27,6 @@ public class AnalizadorSintatico {
                 }
             }
         }
-        return true;
+        return pila.esVacio();
     }
 }
