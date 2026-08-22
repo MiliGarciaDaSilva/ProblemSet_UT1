@@ -8,11 +8,6 @@ import java.util.function.Predicate;
 import ucu.edu.aed.tda.TDACola;
 import ucu.edu.aed.tda.TDALista;
 
-/**
- * Implementación del TDA Cola utilizando un vector circular.
- *
- * @param <T> el tipo de los elementos almacenados en la cola
- */
 public class ColaCircular<T> implements TDACola<T> {
 
   private Object[] vector;
@@ -28,10 +23,14 @@ public class ColaCircular<T> implements TDACola<T> {
   public ColaCircular(int capacidad) {
     this.capacidad = capacidad;
     this.vector = new Object[capacidad];
-    
+
     this.front = 0;
     this.rear = 0;
     this.cantidad = 0;
+  }
+
+  private int posicionFisica(int indiceLogico) {
+    return (front + indiceLogico) % capacidad;
   }
 
   @Override
@@ -85,56 +84,99 @@ public class ColaCircular<T> implements TDACola<T> {
 
   @Override
   public void agregar(T elem) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'agregar'");
+    if (!poneEnCola(elem)) {
+      throw new IllegalStateException("La cola circular está llena");
+    }
   }
 
   @Override
   public void agregar(int index, T elem) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'agregar'");
+    if (index < 0 || index > cantidad) {
+      throw new IndexOutOfBoundsException();
+    }
+    if (cantidad == capacidad) {
+      throw new IllegalStateException("La cola circular está llena");
+    }
+    for (int i = cantidad; i > index; i--) {
+      vector[posicionFisica(i)] = vector[posicionFisica(i - 1)];
+    }
+    vector[posicionFisica(index)] = elem;
+    rear = (rear + 1) % capacidad;
+    cantidad++;
   }
 
   @Override
   public T obtener(int index) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'obtener'");
+    if (index < 0 || index >= cantidad) {
+      throw new IndexOutOfBoundsException();
+    }
+    return (T) vector[posicionFisica(index)];
   }
 
   @Override
   public T remover(int index) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'remover'");
+    if (index < 0 || index >= cantidad) {
+      throw new IndexOutOfBoundsException();
+    }
+    T dato = (T) vector[posicionFisica(index)];
+    for (int i = index; i < cantidad - 1; i++) {
+      vector[posicionFisica(i)] = vector[posicionFisica(i + 1)];
+    }
+    vector[posicionFisica(cantidad - 1)] = null;
+    rear = (rear - 1 + capacidad) % capacidad;
+    cantidad--;
+    return dato;
   }
 
   @Override
   public boolean remover(T elem) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'remover'");
+    int index = indiceDe(elem);
+    if (index == -1) {
+      return false;
+    }
+    remover(index);
+    return true;
   }
 
   @Override
   public boolean contiene(T elem) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'contiene'");
+    return indiceDe(elem) != -1;
   }
 
   @Override
   public int indiceDe(T elem) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'indiceDe'");
+    for (int i = 0; i < cantidad; i++) {
+      Object dato = vector[posicionFisica(i)];
+      if (dato != null && dato.equals(elem)) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   @Override
   public T buscar(Predicate<T> criterio) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'buscar'");
+    for (int i = 0; i < cantidad; i++) {
+      T dato = (T) vector[posicionFisica(i)];
+      if (criterio.test(dato)) {
+        return dato;
+      }
+    }
+    return null;
   }
 
   @Override
   public TDALista<T> ordenar(Comparator<T> comparator) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'ordenar'");
+    ColaCircular<T> resultado = new ColaCircular<>(capacidad);
+    for (int i = 0; i < cantidad; i++) {
+      T dato = obtener(i);
+      int posicion = 0;
+      while (posicion < resultado.cantidad && comparator.compare(dato, resultado.obtener(posicion)) >= 0) {
+        posicion++;
+      }
+      resultado.agregar(posicion, dato);
+    }
+    return resultado;
   }
 
 }
