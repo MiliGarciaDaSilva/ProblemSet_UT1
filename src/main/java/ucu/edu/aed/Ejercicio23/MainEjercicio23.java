@@ -9,7 +9,7 @@ public class MainEjercicio23 {
         Infraestructura infraestructura = new Infraestructura();
         infraestructura.sucursales = new ListaEnlazada<>();
 
-        FileUtils.leerLineas("ProblemSet_UT1\\src\\main\\java\\ucu\\edu\\aed\\resources ej23\\sucursales.txt", linea -> {
+        FileUtils.leerLineas("src/main/resources ej23/sucursales.txt", linea -> {
             if (!linea.trim().isEmpty()){
                 infraestructura.agregarSucursal(linea.trim());
             }

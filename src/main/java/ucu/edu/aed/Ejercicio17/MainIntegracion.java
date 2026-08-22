@@ -6,11 +6,11 @@ public class MainIntegracion {
         Biblioteca biblioteca = new Biblioteca();
 
         Adquisiciones adquisiciones = new Adquisiciones();
-        String rutaAdquisiciones = "ProblemSet_UT1\\src\\main\\java\\ucu\\edu\\aed\\resources ej17\\adquisiciones.txt";
+        String rutaAdquisiciones = "src/main/resources ej17/adquisiciones.txt";
         double valorTotalAgregado = adquisiciones.procesarArchivo(rutaAdquisiciones, biblioteca);
 
         Prestamos prestamos = new Prestamos();
-        String rutaPrestamos = "ProblemSet_UT1\\src\\main\\java\\ucu\\edu\\aed\\resources ej17\\prestamos.txt";
+        String rutaPrestamos = "src/main/resources ej17/prestamos.txt";
         int variacionTotalPrestados = prestamos.procesarArchivo(rutaPrestamos, biblioteca);
 
         System.out.println("Valor total agregado al stock: " + valorTotalAgregado);
